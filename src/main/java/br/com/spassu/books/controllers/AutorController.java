@@ -3,6 +3,7 @@ package br.com.spassu.books.controllers;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,6 +55,10 @@ public class AutorController {
 	
 	@DeleteMapping("/{id}")
 	public void removerAutor(@PathVariable Integer id) {
-		this.service.delete(id);
+		try {
+			this.service.delete(id);			
+		} catch (ConstraintViolationException e) {
+			throw new ConstraintViolationException(e.getMessage(), null, null);
+		}
 	}
 }
