@@ -21,5 +21,5 @@ public class Assunto {
 	private Integer codigo;
 	
 	@Column(name = "Descricao")
-	private String descricao;
+	private String descricao;	
 }

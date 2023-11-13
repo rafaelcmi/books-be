@@ -17,4 +17,8 @@ public class ReportService {
 	public List<Report> list() {
 		return this.repository.findAll();
 	}
+	
+	public List<Report> listByAutor(Integer codigoAutor){
+		return this.repository.findByCodigoAutor(codigoAutor);
+	}
 }

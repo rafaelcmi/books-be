@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,10 +42,19 @@ public class Livro {
 	@Column(name = "Valor")
 	private BigDecimal valor;
 	
-	@OneToMany
+	@ManyToMany
+	@JoinTable(name = "livro_assunto", joinColumns = @JoinColumn(name = "Livro_Codl", table = "livro"), 
+		inverseJoinColumns = @JoinColumn(name = "Assunto_codAs", table = "assunto"), 
+		uniqueConstraints = { @UniqueConstraint(columnNames = {"Livro_Codl", "Assunto_codAs"})
+	})
+	private List<Assunto> assunto;
+	
+	@ManyToMany
+	@JoinTable(name = "livro_autor", joinColumns = @JoinColumn(name = "Livro_Codl", table = "livro"), 
+		inverseJoinColumns = @JoinColumn(name = "Autor_CodAu", table = "autor"), 
+		uniqueConstraints = { @UniqueConstraint(columnNames = {"Livro_Codl", "Autor_CodAu"})
+	})
 	private List<Autor> autor;
 	
-	@OneToMany
-	private List<Assunto> assunto;
 	
 }
