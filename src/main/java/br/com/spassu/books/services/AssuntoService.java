@@ -1,6 +1,7 @@
 package br.com.spassu.books.services;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class AssuntoService {
 	}
 	
 	public Assunto save(Assunto assunto) {
-		if (assunto.getCodigo() != null) {
+		if (Objects.nonNull(assunto.getCodigo())) {
 			Assunto assuntoRecuperado = this.repository.findById(assunto.getCodigo()).orElseGet(null);
 			assuntoRecuperado.setDescricao(assunto.getDescricao());
 			assunto = assuntoRecuperado;

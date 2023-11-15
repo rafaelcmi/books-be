@@ -1,6 +1,7 @@
 package br.com.spassu.books.services;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,12 @@ public class AutorService {
 	}
 	
 	public Autor save(Autor autor) {
+		if (Objects.nonNull(autor.getCodigo())) {
+			Autor autorRecuperado = this.repository.findById(autor.getCodigo()).orElseGet(null);
+			autorRecuperado.setNome(autor.getNome());
+			autor = autorRecuperado;
+		}
+		
 		return this.repository.save(autor);
 	}
 	
