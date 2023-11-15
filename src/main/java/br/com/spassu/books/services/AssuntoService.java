@@ -23,6 +23,11 @@ public class AssuntoService {
 	}
 	
 	public Assunto save(Assunto assunto) {
+		if (assunto.getCodigo() != null) {
+			Assunto assuntoRecuperado = this.repository.findById(assunto.getCodigo()).orElseGet(null);
+			assuntoRecuperado.setDescricao(assunto.getDescricao());
+			assunto = assuntoRecuperado;
+		}
 		return this.repository.save(assunto);
 	}
 	
